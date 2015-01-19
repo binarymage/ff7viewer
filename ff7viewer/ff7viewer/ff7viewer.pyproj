@@ -26,12 +26,18 @@
   <ItemGroup>
     <Compile Include="ff7viewer\Bone.py" />
     <Compile Include="ff7viewer\ff7viewer.py" />
+    <Compile Include="ff7viewer\HRCFile.py" />
     <Compile Include="ff7viewer\__init__.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="setup.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="tests\fixtures\HRCFixtures.py" />
+    <Compile Include="tests\fixtures\__init__.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_HRCFile.py" />
     <Compile Include="tests\test_Bone.py" />
     <Compile Include="tests\test_ff7viewer.py">
       <SubType>Code</SubType>
@@ -46,6 +52,7 @@
     <Folder Include="bin\" />
     <Folder Include="doc\" />
     <Folder Include="tests\" />
+    <Folder Include="tests\fixtures\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
