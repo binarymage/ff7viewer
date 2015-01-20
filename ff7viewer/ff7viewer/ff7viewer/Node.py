@@ -14,7 +14,7 @@ class Node(object):
     def __iter__(self):
         for v in chain(*imap(iter, self.children)):
             yield v
-        yield self.data
+        yield self
 
     def set_data(self, data):
         self.data = data
