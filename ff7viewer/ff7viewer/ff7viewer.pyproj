@@ -27,6 +27,9 @@
     <Compile Include="ff7viewer\Bone.py" />
     <Compile Include="ff7viewer\ff7viewer.py" />
     <Compile Include="ff7viewer\HRCFile.py" />
+    <Compile Include="ff7viewer\Node.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="ff7viewer\__init__.py">
       <SubType>Code</SubType>
     </Compile>
@@ -40,6 +43,9 @@
     <Compile Include="tests\test_HRCFile.py" />
     <Compile Include="tests\test_Bone.py" />
     <Compile Include="tests\test_ff7viewer.py">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Include="tests\test_Node.py">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="tests\__init__.py" />
