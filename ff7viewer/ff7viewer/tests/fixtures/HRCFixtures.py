@@ -41,7 +41,7 @@ FIXTURE['non_int_bones'] = """
 :BONES 1.0
 """.splitlines(True)
 
-# Nnegative bones
+# Negative bones
 FIXTURE['negative_bones'] = """
 :HEADER_BLOCK 2
 :SKELETON test
@@ -91,6 +91,6 @@ root
 1 abcd
 
 child2
-root
+child1
 0.12345
 1 abcd""".splitlines(True)

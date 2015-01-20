@@ -32,7 +32,7 @@ class HRCFile(object):
         """Initialise the class with the given filename"""
         self.filename = filename
         self.bones = 0
-        self.bone_list = []
+        self.bone_list = ['root']
         root = Bone.Bone("root")
         self.bone_tree = Node.Node(root)
 
@@ -40,7 +40,7 @@ class HRCFile(object):
         """Read the HRC file"""
         with open(self.filename, "r") as f:
             self._read(f)
-            close(f)
+            f.close()
 
     def _strip_blank_lines(self, lines):
         """Remove leading blank lines"""
@@ -103,6 +103,8 @@ class HRCFile(object):
         if parent not in self.bone_list:
             raise InvalidParentBoneError
 
+        self.bone_list.append(name)
+
         bone = Bone.Bone(name)
         bone.set_length(length)
         for i in range(int(resources[0])):
@@ -132,8 +134,8 @@ class HRCFile(object):
         # Read the lines into memory
         lines = f.readlines();
         try:
-            (self.version, self.skeleton_name, self.bones, body) = self.parse(lines)
-            # self.parse_bones(body)
+            (self.version, self.skeleton_name, self.bones, body) = self.parse_header(lines)
+            self.parse_bones(body)
         except:
             raise
 
