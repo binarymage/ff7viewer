@@ -10,7 +10,6 @@ class Test_Node(unittest.TestCase):
         """Check that this is an empty tree"""
         self.assertIsNone(self.tree.data)
         self.assertEquals(self.tree.children, [])
-        self.assertIsNone(self.tree.parent)
 
     def test_create_with_data(self):
         """Check that creating with data works"""
@@ -20,7 +19,6 @@ class Test_Node(unittest.TestCase):
     def test_create_with_parent(self):
         """Check that creating with a parent works"""
         node = Node.Node("aaaa", self.tree)
-        self.assertEquals(node.parent, self.tree)
         self.assertIn(node, self.tree.children)
 
     def test_set_data(self):

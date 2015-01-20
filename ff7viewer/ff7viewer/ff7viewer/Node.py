@@ -1,3 +1,5 @@
+from itertools import chain, imap
+
 class Node(object):
     """A node of a tree"""
     
@@ -5,10 +7,14 @@ class Node(object):
         """Create a node with the given data"""
         self.data = data
         self.children = []
-        self.parent = parent
 
         if parent:
             parent.add_child(self)
+
+    def __iter__(self):
+        for v in chain(*imap(iter, self.children)):
+            yield v
+        yield self.data
 
     def set_data(self, data):
         self.data = data
