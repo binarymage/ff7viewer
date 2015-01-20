@@ -19,6 +19,7 @@ class Bone(object):
         """Initialise the class with the given name"""
         self.name = name
         self.resources = []
+        self.length = 0
 
     def set_length(self, l):
         """Set the length of this bone"""
