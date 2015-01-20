@@ -24,14 +24,28 @@ x:SKELETON test
 FIXTURE['malformed_bones'] = """
 :HEADER_BLOCK 2
 :SKELETON test
-x:BONES 0
+x:BONES 0.12345
 """.splitlines(True)
 
-# Well formed header
+# Zero bones
 FIXTURE['zero_bones'] = """
 :HEADER_BLOCK 2
 :SKELETON test
 :BONES 0
+""".splitlines(True)
+
+# Non-integer bones
+FIXTURE['non_int_bones'] = """
+:HEADER_BLOCK 2
+:SKELETON test
+:BONES 1.0
+""".splitlines(True)
+
+# Nnegative bones
+FIXTURE['negative_bones'] = """
+:HEADER_BLOCK 2
+:SKELETON test
+:BONES -3
 """.splitlines(True)
 
 # Well formed header
@@ -41,10 +55,10 @@ FIXTURE['well_formed'] = """
 :BONES 1
 """.splitlines(True)
 
-# Bad name - same as root
-FIXTURE['bad_bone_name'] = """
+# Duplicate bone name
+FIXTURE['bad_parent_bone'] = """
 root
-bad_name
+root
 0.12345
 0""".splitlines(True)
 
@@ -55,14 +69,7 @@ bad_parent
 0.12345
 0""".splitlines(True)
 
-# Bad float value
-FIXTURE['bad_bone_length'] = """
-name
-parent
-bad_number
-0""".splitlines(True)
-
-# Zero resources
+# Zero resources - okay
 FIXTURE['zero_resources'] = """
 name
 root
@@ -76,8 +83,8 @@ root
 0.12345
 1 abcd""".splitlines(True)
 
-# Multiple bones - root parent only
-FIXTURE['multiple_bones_single_parent'] = """
+# Multiple bones
+FIXTURE['multiple_bones'] = """
 child1
 root
 0.12345

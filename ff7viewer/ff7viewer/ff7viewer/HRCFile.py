@@ -1,4 +1,5 @@
 import Bone
+import Node
 
 class HeaderBlockError(Exception):
     """Invalid or malformed :HEADER_BLOCK line"""
@@ -16,6 +17,14 @@ class BoneNumberError(Exception):
     """Invalid number of bones"""
     pass
 
+class DuplicateBoneError(Exception):
+    """Duplicated bone name"""
+    pass
+
+class InvalidParentBoneError(Exception):
+    """Invalid parent bone"""
+    pass
+
 class HRCFile(object):
     """An HRC file"""
 
@@ -23,9 +32,9 @@ class HRCFile(object):
         """Initialise the class with the given filename"""
         self.filename = filename
         self.bones = 0
-        self.bone_tree = {}
+        self.bone_list = []
         root = Bone.Bone("root")
-        self.bone_tree['root'] = root
+        self.bone_tree = Node.Node(root)
 
     def readfile(self):
         """Read the HRC file"""
@@ -66,6 +75,16 @@ class HRCFile(object):
         if type != ":BONES":
             raise MalformedBoneError
 
+        # Make sure the number is a positive integer greater than 0
+        if bones.find(".") != -1:
+            raise BoneNumberError
+        try:
+            bones = int(bones)
+        except ValueError:
+            raise BoneNumberError
+        if bones <= 0:
+            raise BoneNumberError
+
         return (int(version), skeleton.strip(), int(bones), lines[3:])
 
     def _make_bone(self, body):
@@ -78,26 +97,33 @@ class HRCFile(object):
         length = float(body[2].strip())
         resources = body[3].strip().split(" ")
         
-        if name in self.bone_tree:
-            raise KeyError
+        if name in self.bone_list:
+            raise DuplicateBoneError
 
-        if parent not in self.bone_tree:
-            raise KeyError
+        if parent not in self.bone_list:
+            raise InvalidParentBoneError
 
-        bone = Bone(name)
+        bone = Bone.Bone(name)
         bone.set_length(length)
-        for i in range(resources[0]):
-            bone.add_resource(resource[i])
+        for i in range(int(resources[0])):
+            bone.add_resource(resources[i + 1])
 
-        return (bone, body[4:])
+        return (bone, parent, body[4:])
+
+    def _find_node(self, node):
+        """Find the bone in the tree"""
+        for i in iter(self.bone_tree):
+            if i.data.name == node:
+                return i
+
+        return None
 
     def parse_bones(self, body):
         """Parse bones into the bone tree"""
-        if self.bones == 0:
-            raise BoneNumberError
         for i in range(self.bones):
             try:
-                (bone, body) = self._make_bone(body)
+                (bone, parent, body) = self._make_bone(body)
+                Node.Node(bone, self._find_node(parent))
             except:
                 raise
 
